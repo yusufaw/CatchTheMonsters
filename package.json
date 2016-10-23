@@ -1,0 +1,23 @@
+{
+  "name": "Catch The Monsters",
+  "version": "0.0.1",
+  "description": "Simple Multiplayer Game using Socket.IO",
+  "main": "app.js",
+  "scripts": {
+    "test": "coba"
+  },
+  "keywords": [
+    "game",
+    "Multiplayer",
+    "socket.io",
+    "canvas",
+    "html5"
+  ],
+  "author": "Yusuf Aji Wibowo",
+  "email": "ucupper@gmail.com",
+  "license": "BSD",
+  "dependencies": {
+    "express": "~4.14.0",
+    "socket.io": "~1.5.0"
+  }
+}
