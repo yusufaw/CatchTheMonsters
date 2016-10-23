@@ -10,8 +10,8 @@ document.body.appendChild(canvas);
 
 var socket = io();
 socket.on('id', function(data) {
-        id = data;
-    })
+    id = data;
+})
 
 var hero = {
     speed: 100 // movement in pixels per second
@@ -98,7 +98,7 @@ var update = function(modifier) {
     }
     socket.emit("position", players[id]);
 
-    if (players[id] != undefined) {
+    if (players[id] != undefined && monsterReady) {
         if (
             players[id].x <= (monster.x + 32) &&
             monster.x <= (players[id].x + 32) &&
@@ -106,6 +106,7 @@ var update = function(modifier) {
             monster.y <= (players[id].y + 32)
         ) {
             socket.emit("catch");
+            monsterReady = false;
         }
     }
 };
@@ -122,6 +123,7 @@ socket.on("remove", function(data) {
 
 socket.on("monster position", function(data) {
     monster = data;
+    monsterReady = true;
 });
 
 socket.on("update score", function(data) {
