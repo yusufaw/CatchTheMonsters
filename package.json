@@ -1,5 +1,5 @@
 {
-  "name": "Catch The Monsters",
+  "name": "CatchTheMonsters",
   "version": "0.0.1",
   "description": "Simple Multiplayer Game using Socket.IO",
   "main": "app.js",
