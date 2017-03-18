@@ -2,10 +2,10 @@
 var name = prompt("Please enter your name", "Mblo");
 
 var canvas = document.createElement("canvas");
-var ctx = canvas.getContext("2d");
-var id = "jancok";
 canvas.width = 700;
 canvas.height = 480;
+var ctx = canvas.getContext("2d");
+var id = "jancok";
 document.body.appendChild(canvas);
 
 var socket = io();
