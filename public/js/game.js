@@ -1,67 +1,52 @@
 // Create the canvas
-var name = prompt("Please enter your name", "Mblo");
+const name = prompt("Please enter your name", "Mblo");
 
-var canvas = document.createElement("canvas");
+let canvas = document.createElement("canvas");
 canvas.width = 700;
 canvas.height = 480;
-var ctx = canvas.getContext("2d");
-var id = "jancok";
+let ctx = canvas.getContext("2d");
+let id = "xwkwk";
 document.body.appendChild(canvas);
 
-var socket = io();
+const socket = io();
 socket.on('id', function(data) {
     id = data;
 })
 
-var hero = {
-    speed: 100 // movement in pixels per second
-};
-var players = {};
+let players = {};
 
 socket.emit('name', name);
 
 // Background image
-var bgReady = false;
-var bgImage = new Image();
-bgImage.onload = function() {
-    bgReady = true;
-};
+let bgReady = false;
+let bgImage = new Image();
+bgImage.onload = () => bgReady = true;
 bgImage.src = "images/background.png";
 
 // Hero image
-var heroReady = false;
-var heroImage = new Image();
-heroImage.onload = function() {
-    heroReady = true;
-};
+let heroReady = false;
+let heroImage = new Image();
+heroImage.onload = () => heroReady = true;
 heroImage.src = "images/hero.png";
 
 // Monster image
-var monsterReady = false;
-var monsterImage = new Image();
-monsterImage.onload = function() {
-    monsterReady = true;
-};
+let monsterReady = false;
+let monsterImage = new Image();
+monsterImage.onload = () => monsterReady = true;
 monsterImage.src = "images/monster.png";
 
-socket.on('new', function(data) {
-    players[data.id] = data;
-});
-var monster = {};
-var monstersCaught = 0;
+socket.on('new', (data) => players[data.id] = data);
+let monster = {};
+let monstersCaught = 0;
 
 // Handle keyboard controls
-var keysDown = {};
+let keysDown = {};
 
-addEventListener("keydown", function(e) {
-    keysDown[e.keyCode] = true;
-}, false);
+addEventListener("keydown", (e) => keysDown[e.keyCode] = true, false);
 
-addEventListener("keyup", function(e) {
-    delete keysDown[e.keyCode];
-}, false);
+addEventListener("keyup", (e) => delete keysDown[e.keyCode], false);
 
-function ellipse(context, cx, cy, rx, ry, col) {
+const ellipse = (context, cx, cy, rx, ry, col) => {
     context.save(); // save state
     context.beginPath();
 
@@ -75,7 +60,7 @@ function ellipse(context, cx, cy, rx, ry, col) {
 }
 
 // Update game objects
-var update = function(modifier) {
+const update = modifier => {
     if (38 in keysDown) { // Player holding up
         if (players[id].y > 0) {
             players[id].y -= players[id].speed * modifier;
@@ -111,27 +96,23 @@ var update = function(modifier) {
     }
 };
 
-socket.on("position", function(data) {
+socket.on("position", data => {
     if (data.id != id) {
         players[data.id] = data.data;
     }
 });
 
-socket.on("remove", function(data) {
-    delete players[data];
-});
+socket.on("remove", data => delete players[data]);
 
-socket.on("monster position", function(data) {
+socket.on("monster position", data => {
     monster = data;
     monsterReady = true;
 });
 
-socket.on("update score", function(data) {
-    players[data.id].point = data.point;
-});
+socket.on("update score", data => players[data.id].point = data.point);
 
 // Draw everything
-var render = function() {
+const render = () => {
     ctx.fillStyle = "#ffffff";
     ctx.fillRect(0, 0, 1000, canvas.height);
     if (bgReady) {
@@ -139,18 +120,16 @@ var render = function() {
     }
 
     if (heroReady) {
-        var heightPos = 32;
-        for (var key in players) {
-            if (players[key]) {
-                ctx.drawImage(heroImage, players[key].x, players[key].y);
-                ellipse(ctx, players[key].x + 16, players[key].y + 40, 5, 5, players[key].color);
+        let heightPos = 32;
+        for (key in players) {
+            ctx.drawImage(heroImage, players[key].x, players[key].y);
+            ellipse(ctx, players[key].x + 16, players[key].y + 40, 5, 5, players[key].color);
 
-                ctx.fillStyle = players[key].color;
-                ctx.font = "18px Helvetica";
-                ctx.textAlign = "left";
-                ctx.textBaseline = "top";
-                ctx.fillText(players[key].name + ": " + players[key].point, 530, heightPos += 20);
-            }
+            ctx.fillStyle = players[key].color;
+            ctx.font = "18px Helvetica";
+            ctx.textAlign = "left";
+            ctx.textBaseline = "top";
+            ctx.fillText(players[key].name + ": " + players[key].point, 530, heightPos += 20);
         }
     }
 
@@ -160,9 +139,9 @@ var render = function() {
 };
 
 // The main game loop
-var main = function() {
-    var now = Date.now();
-    var delta = now - then;
+const main = () => {
+    const now = Date.now();
+    const delta = now - then;
 
     update(delta / 1000);
     render();
@@ -174,10 +153,10 @@ var main = function() {
 };
 
 // Cross-browser support for requestAnimationFrame
-var w = window;
+let w = window;
 requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame || w.msRequestAnimationFrame || w.mozRequestAnimationFrame;
 
 // Let's play this game!
-var then = Date.now();
+let then = Date.now();
 //reset();
 main();
