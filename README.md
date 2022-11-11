@@ -6,6 +6,4 @@ modified from http://www.lostdecadegames.com/how-to-make-a-simple-html5-canvas-g
 You can play it at https://catch-monster.herokuapp.com/
 
 
-![Screenshot](https://cloud.githubusercontent.com/assets/3977416/24075501/51f23286-0c4f-11e7-90a6-2b006f4bb80f.png)
-
-
+![playing-catch-monster](https://user-images.githubusercontent.com/3977416/201281195-d184eb7b-4405-4808-8f45-a2442b0c9a8a.gif)
